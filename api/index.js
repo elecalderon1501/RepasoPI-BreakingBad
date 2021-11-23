@@ -26,3 +26,4 @@ conn.sync({ force: true }).then(() => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   });
 });
+//force:true borra la db cada vez que corta el servidor
