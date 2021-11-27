@@ -13,6 +13,23 @@ export function getCharacters() {
     }
 }
 
+export function postCharacter(payload) {
+    return async function (dispatch) {
+        const response = await axios.post("http://localhost:3001/character", payload);
+        console.log(response);
+        return response;
+    }
+}
+
+export function orderByName(payload) {
+    return {
+        type: 'ORDER_BY_NAME',
+        payload
+    }
+}
+
+
+
 export function filterCharactersByStatus(payload){
     console.log(payload)
     return{
@@ -21,6 +38,7 @@ export function filterCharactersByStatus(payload){
     }
 
 }
+
 
 export function filterCreated(payload) {
     return{

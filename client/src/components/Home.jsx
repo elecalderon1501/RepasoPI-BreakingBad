@@ -1,7 +1,7 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import { getCharacters, filterCharactersByStatus, filterCreated } from '../actions';
+import { getCharacters, filterCharactersByStatus, filterCreated, orderByName } from '../actions';
 import {Link} from 'react-router-dom'
 import Card from './Card';
 import Paginado from './Paginado';
@@ -11,6 +11,8 @@ export default function Home(){
     
 const dispatch = useDispatch()
 const allCharacters = useSelector ((state) => state.characters);
+const occupations = useSelector ((state) => state.occupations);
+const [orden, setOrden] = useState('')
 const [currentPage,setCurrentPage] = useState(1) 
 // la pagina actual sera 1
 const [charactersPerPage, setCharactersPerPage] = useState(6)
@@ -35,6 +37,13 @@ useEffect (() =>{
 function handleClick(e) {
     e.preventDefault();
     dispatch(getCharacters());
+};
+
+function handleSort (e) {
+    e.preventDefault();
+    dispatch(orderByName(e.target.value))
+    setCurrentPage(1);
+    setOrden(`Ordenado ${e.target.value}`)
 }
 
 function handleFilterStatus(e){
