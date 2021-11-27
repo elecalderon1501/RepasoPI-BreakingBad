@@ -1,15 +1,31 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import { getCharacters } from '../actions';
+import { getCharacters, filterCharactersByStatus, filterCreated } from '../actions';
 import {Link} from 'react-router-dom'
 import Card from './Card';
+import Paginado from './Paginado';
 
 
 export default function Home(){
     
 const dispatch = useDispatch()
-const allCharacters = useSelector ((state) => state.characters)
+const allCharacters = useSelector ((state) => state.characters);
+const [currentPage,setCurrentPage] = useState(1) 
+// la pagina actual sera 1
+const [charactersPerPage, setCharactersPerPage] = useState(6)
+//aca ponemos cuantos personajes queremos por pagina
+const indexOfLastCharacter = currentPage * charactersPerPage; //6 indice del ultimo personaje
+const indexOfFirstCharacter = indexOfLastCharacter - charactersPerPage //indice del primer personaje
+const currentCharacters = allCharacters.slice(indexOfFirstCharacter, indexOfLastCharacter); // aca me devuelve un array con los personajes entres primer y ultimo 
+// 1---0---6
+// 2---7---13
+
+const paginado = (pageNumber) => {
+    setCurrentPage(pageNumber)
+}
+//
+
 
 useEffect (() =>{
     dispatch(getCharacters());  //=mapDispatchtoprops
@@ -20,6 +36,15 @@ function handleClick(e) {
     e.preventDefault();
     dispatch(getCharacters());
 }
+
+function handleFilterStatus(e){
+    dispatch(filterCharactersByStatus(e.target.value))
+}
+
+function handleFilterCreated (e){
+    dispatch(filterCreated(e.target.value))
+}
+
 
 return(
     <div>
@@ -35,23 +60,30 @@ return(
                 <option value = 'asc'>Ascendente</option>
                 <option value = 'desc'>Descendente</option>
             </select>
-            <select>
+            <select onChange={e => handleFilterStatus(e)}>
+                {/* el value tiene q ser el mismo q los que trae la api */}
                 <option value = 'All'>Todos</option>
                 <option value = 'Alive'> Vivo</option>
                 <option value = 'Deceased'>Muerto</option>
                 <option value = 'Unknown'>Desconocido</option>
                 <option value = 'Presumed Dead'>Probablemente Muerto</option>
             </select>
-            <select>
+            <select onChange = { e => handleFilterCreated(e)}>
                 <option value = 'All'>Todos</option>
                 <option value = "created">Creados</option>
                 <option value = 'api'>Existente</option>
             </select>
-            {allCharacters.map(el => {
+
+            <Paginado charactersPerPage = {charactersPerPage}
+            allCharacters = {allCharacters.length}
+            paginado = {paginado} />
+
+
+            {currentCharacters?.map(el => { //mapeamos renderizamos la pagina seleccionada (1, 2 ...) 
                     return(
                         <div>
                             <Link to={"/home/" + el.id}>
-                            <Card name = {el.name} image= {el.img} nickname = {el.nickname} key={el.id}/>
+                            <Card name = {el.name} img= {el.img} nickname = {el.nickname} key={el.id}/>
                         </Link>
                         </div>
                     );

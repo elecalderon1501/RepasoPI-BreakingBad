@@ -98,14 +98,14 @@ router.get("/occupations", async (req, res) => {
 })
 
 router.post("/character", async (req, res) => {
-  let { name, nickname, birthday, image, status, createdInDb, occupation } =
+  let { name, nickname, birthday, img, status, createdInDb, occupation } =
     req.body
   //creo el personaje con los datos recibidos por body
   let characterCreated = await Character.create({
     name,
     nickname,
     birthday,
-    image,
+    img,
     status,
     createdInDb,
   })
