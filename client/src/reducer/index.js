@@ -1,7 +1,8 @@
 const initialState = {
   characters: [],
   allCharacters: [],
-  occupations: []
+  occupations: [],
+  detail: []
 }
 
 function rootReducer(state = initialState, action) {
@@ -53,6 +54,12 @@ function rootReducer(state = initialState, action) {
         characters:
           action.payload === "All" ? state.allCharacters : statusFiltered2,
       }
+        case "GET_DETAILS":
+          return {
+            ...state,
+            detail: action.payload
+          }
+
       case 'ORDER_BY_NAME':
         let sortedArr = action.payload === 'asc' ? state.characters.sort(function (a, b){
           if (a.name > b.name) {
