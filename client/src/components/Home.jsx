@@ -5,11 +5,13 @@ import { getCharacters, filterCharactersByStatus, filterCreated, orderByName } f
 import {Link} from 'react-router-dom'
 import Card from './Card';
 import Paginado from './Paginado';
+import SearchBar from './SearchBar';
 
 
 export default function Home(){
     
 const dispatch = useDispatch()
+
 const allCharacters = useSelector ((state) => state.characters);
 const occupations = useSelector ((state) => state.occupations);
 const [orden, setOrden] = useState('')
@@ -87,12 +89,14 @@ return(
             allCharacters = {allCharacters.length}
             paginado = {paginado} />
 
+        <SearchBar/>
+
 
             {currentCharacters?.map(el => { //mapeamos renderizamos la pagina seleccionada (1, 2 ...) 
                     return(
                         <div>
                             <Link to={"/home/" + el.id}>
-                            <Card name = {el.name} img= {el.img} nickname = {el.nickname} key={el.id}/>
+                            <Card name = {el.name} img= {el.img ? el.img : el.image} nickname = {el.nickname} key={el.id}/>
                         </Link>
                         </div>
                     );
@@ -103,3 +107,6 @@ return(
     </div>
 )
 }
+
+//c.image? c.image : <img src = 'url......'/>
+//aca preguntamos si hay imagen, en caso negativo asignamos una imagen por defecto

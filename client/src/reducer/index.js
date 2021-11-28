@@ -1,6 +1,7 @@
 const initialState = {
   characters: [],
   allCharacters: [],
+  occupations: []
 }
 
 function rootReducer(state = initialState, action) {
@@ -11,6 +12,19 @@ function rootReducer(state = initialState, action) {
         characters: action.payload,
         allCharacters: action.payload,
       }
+    case 'GET_NAME_CHARACTERS':
+      return {
+        ...state, 
+        characters: action.payload
+      }
+
+    case 'GET_OCCUPATIONS':
+      return{
+        ...state, 
+        occupations: action.payload
+      }
+
+
     case 'FILTER_BY_STATUS':
       const allCharacters = state.allCharacters
       const statusFiltered =
@@ -22,6 +36,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         characters: statusFiltered,
       }
+
+      case 'POST_CHARACTER':
+        return{
+          ...state,
+        }
+
 
       //recordar crear personajes para probar este filtro
     case 'FILTER_CREATED':
