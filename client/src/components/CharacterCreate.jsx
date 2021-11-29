@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react';
-import {Link, useHistory} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom'; //en react router dom v6 useHistory --> useNavigate()
 import { postCharacter, getOccupations } from '../actions';
 import { useDispatch, useSelector } from "react-redux";
 
@@ -16,7 +16,7 @@ function validate(input) {
 
 export default function CharacterCreate(){
     const dispatch = useDispatch()
-    const history = useHistory() //me redirige a la ruta que le indique
+    const history = useNavigate() //me redirige a la ruta que le indique (useHistory=useNavigate)
     const occupations = useSelector((state) => state.occupations)
     const[errors, setErrors] = useState({});
     const [input, setInput] = useState({

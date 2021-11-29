@@ -12,11 +12,11 @@ export default function Paginado({charactersPerPage, allCharacters, paginado}){
     return(
         <nav>
             <ul className = 'paginado'>
-                {pageNumbers && pageNumbers.map(number => {
+                {pageNumbers && pageNumbers.map((number) => (
                     <li className='number' key={number}>
-                        <a  onClick={() => paginado(number)}>{number}</a>
+                        <a href="#/"  onClick={() => paginado(number)}>{number}</a>
                     </li>
-                })}
+                ))}
             </ul>
         </nav>
     )

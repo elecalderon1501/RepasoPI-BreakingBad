@@ -67,7 +67,7 @@ return(
         </button>
         <div>
             {/* filtros */}
-            <select>
+            <select onChange = {e => handleSort(e)}>
                 <option value = 'asc'>Ascendente</option>
                 <option value = 'desc'>Descendente</option>
             </select>
